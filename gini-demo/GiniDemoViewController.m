@@ -113,7 +113,7 @@
 - (void)didScanOriginal:(UIImage *)image {
     // Original image taken by the Gini Vision Module
     // If set save the original image
-    if ([_userDefaults boolForKey:@"storeRectifiedImageSetting"]) {
+    if ([_userDefaults boolForKey:@"storeOriginalImageSetting"]) {
         [self storeImage:image withCondition:@"original"];
     }
 }

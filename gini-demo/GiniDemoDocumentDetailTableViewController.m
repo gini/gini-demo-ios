@@ -11,7 +11,6 @@
 
 @interface GiniDemoDocumentDetailTableViewController () {
     NSArray *sortedKeys;
-    NSMutableArray *sortedValues;
 }
 @end
 

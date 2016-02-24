@@ -5,9 +5,9 @@ PODS:
   - Bolts/AppLinks (1.1.5):
     - Bolts/Tasks
   - Bolts/Tasks (1.1.5)
-  - Gini-iOS-SDK (0.2.10):
+  - Gini-iOS-SDK (0.3.0):
     - Bolts (~> 1.1.0)
-  - GiniVisionSDK (0.91.145):
+  - GiniVisionSDK (0.91.163):
     - OpenCV (= 2.4.8)
   - OpenCV (2.4.8)
 
@@ -17,8 +17,8 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Bolts: aac24961496d504aa56fc267cde95162a71bac39
-  Gini-iOS-SDK: 68da8a6aa38010719e602949a4010b99863c8f1f
-  GiniVisionSDK: cd9509d92d92c3f15952b328f042a3e8aa3f0792
+  Gini-iOS-SDK: a10593870472fb94fc82f6173cd35171d07ca0e3
+  GiniVisionSDK: aa194c388bd00fd7c40090ddddee74975dd9afa4
   OpenCV: b983bf3b1ec377c187939935066f438dceafc926
 
 COCOAPODS: 0.39.0

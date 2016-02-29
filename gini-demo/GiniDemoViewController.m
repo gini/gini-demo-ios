@@ -42,16 +42,21 @@
 - (IBAction)startGiniVisionModule:(id)sender {
     /**
      * If you'd like to configure the module check out the [documentation](http://developer.gini.net/ginivision-ios/guides/style-the-module.html) for more information.
-     * There it will be described how to use the `GiniConfiguration` class.
-     *
-     * To keep this code clean and simple we'll go with the standard configuration.
+     * There it will be described how to make further use of the `GiniConfiguration` class.
      */
+    GiniConfiguration *config = [GiniConfiguration sharedConfiguration];
+    config.createJPEGDocumentWithMetaData = YES;
     [GiniVision setLogLevel:GINILogLevelNone];
     [GiniVision captureImageWithViewController:self delegate:self];
 }
 
 // MARK: GiniVisionDelegate
 - (void)didScan:(UIImage *)document documentType:(GINIDocumentType)docType uploadDelegate:(id<GINIVisionUploadDelegate>)delegate {
+    // Deprecated and will be removed in future release
+    // Keep in code because currently required by delegate
+}
+
+- (void)didScan:(UIImage *)document documentJPEGData:(NSData *)documentJPEGData documentType:(GINIDocumentType)docType uploadDelegate:(id<GINIVisionUploadDelegate>)delegate {
     // Rectified and processed image created by the Gini Vision Module
     
     // If set save the processed image
@@ -78,13 +83,28 @@
     __block NSString *documentId;
     __block NSDictionary *extractions;
     
+    // Get the doctype from given enum
+    __block NSString *docTypeString;
+    switch (docType) {
+        case GINIDocumentTypeInvoice:
+            docTypeString = @"Invoice";
+            break;
+        default:
+            docTypeString = @"RemittanceSlip";
+            break;
+    }
+    
     [[[[[[sdk.sessionManager getSession] continueWithBlock:^id(BFTask *task) {
         if (task.error) {
             return [sdk.sessionManager logIn];
         }
         return task.result;
     }] continueWithSuccessBlock:^id(BFTask *task) {
-        return [manager createDocumentWithFilename:fileName fromImage:document];
+        if (documentJPEGData) {
+            return [manager createDocumentWithFilename:fileName fromData:documentJPEGData docType:docTypeString];
+        } else {
+            return [manager createDocumentWithFilename:fileName fromImage:document];
+        }
     }] continueWithSuccessBlock:^id(BFTask *task) {
         [delegate didProgressWithMessage:@"Analyse document"];
         giniDocument = (GINIDocument *)task.result;
@@ -108,6 +128,7 @@
         [delegate didEndUpload];
         return nil;
     }];
+
 }
 
 - (void)didScanOriginal:(UIImage *)image {

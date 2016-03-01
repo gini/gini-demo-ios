@@ -18,7 +18,7 @@ Build & Install the App
 Go into the project directory and enter:
 
 ```
-	$ sh pod-install-example.sh
+	$ sh pod-install.sh
 ```
 
 This will install all dependencies.
